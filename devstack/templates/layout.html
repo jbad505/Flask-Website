@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='mainstyle.css') }}">
+
+    <!-- Page title handler -->
+    {% if title %}
+        <title>DevStack - {{ title }}</title>
+    {% else %}
+        <title>DevStack</title>
+    {% endif %}
+</head>
+<body>
+
+<!-- Nav bar -->
+<nav class="navbar navbar-expand-md navbar-dark bg-navbg shadow">
+    <div class="container">
+        <a class="navbar-brand mr-4" href="/">
+            <img src="/static/assests/DSlogo.png" width="30" height="30" align="left">
+            DevStack
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+                <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Community</a>
+                <!-- <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a> -->
+            </div>
+
+            <!-- Navbar Right Side -->
+            <div class="navbar-nav">
+                {% if current_user.is_authenticated %}
+                    <a class="nav-item nav-link" href="{{ url_for('posts.new_post') }}">Create Post</a>
+                    <a class="nav-item nav-link" href="{{ url_for('users.account') }}">Account</a>
+                    <a class="nav-item nav-link" href="{{ url_for('users.logout') }}">Logout</a>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2 ml-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                {% else %}
+                    <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>
+                    <a class="nav-item nav-link" href="{{ url_for('users.register') }}">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Content Main-->
+<main role="main" class="container">
+    <div class="row">
+        <div class="col-md-8">
+
+            <!-- Flash Message Alert -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} fade show">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+        </div>
+
+        <!-- Content Right Side -->
+        <div class="col-md-4">
+            <div class="content-section">
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4" align="center">Tutorials</legend>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item list-group-item-light">Flask</li>
+                        <li class="list-group-item list-group-item-light">Wordpress</li>
+                        <li class="list-group-item list-group-item-light">ReactJS</li>
+                        <li class="list-group-item list-group-item-light">JavaScript</li>
+                        <li class="list-group-item list-group-item-light">Python</li>
+                        <li class="list-group-item list-group-item-light">Java</li>
+                        <li class="list-group-item list-group-item-light">Android</li>
+                    </ul>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
+        integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+        crossorigin="anonymous"></script>
+</body>
+</html>
