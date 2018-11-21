@@ -8,6 +8,7 @@ Clone the repo
 
 ```
 Linux: sudo git clone -v https://github.com/jbad505/Flask-Website.git
+```
 
 ## Deployment
 
